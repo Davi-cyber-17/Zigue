@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050810">
+  <title>Zigue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+
+    <!-- ===== MENU ===== -->
+    <section id="screen-menu" class="screen active">
+      <div class="panel-col center">
+        <div class="hero-board" aria-hidden="true"></div>
+        <h1 class="logo">Zigue</h1>
+        <p class="tagline">Dama brasileira 8×8 com captura obrigatória. Joga no celular, tablet e computador.</p>
+
+        <div class="menu-buttons">
+          <button class="btn primary big" id="btn-local">Modo Local</button>
+          <button class="btn big" id="btn-online">Modo Online</button>
+        </div>
+
+        <details class="rules">
+          <summary>Como jogar</summary>
+          <ul>
+            <li>O Ciano começa. Peças comuns andam 1 casa na diagonal, para frente.</li>
+            <li>A captura é obrigatória e vale para frente e para trás.</li>
+            <li>Havendo mais de uma captura possível, você deve fazer a que leva mais peças.</li>
+            <li>Ao chegar na última linha, a peça vira dama: anda quantas casas quiser na diagonal e captura de longe.</li>
+            <li>Vence quem deixar o adversário sem peças ou sem jogadas.</li>
+            <li>20 lances de cada lado só com damas e sem captura terminam em empate.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===== LOBBY ONLINE ===== -->
+    <section id="screen-lobby" class="screen">
+      <div class="panel-col">
+        <button class="link-back" id="lobby-back">‹ Voltar</button>
+        <h2 class="title">Modo Online</h2>
+
+        <div class="card">
+          <div id="lobby-form">
+            <label for="inp-name">Seu nome</label>
+            <input id="inp-name" maxlength="16" placeholder="Jogador" autocomplete="off">
+
+            <button class="btn primary" id="btn-create">Criar sala</button>
+
+            <div class="divider"><span>ou entre em uma sala</span></div>
+
+            <label for="inp-code">Código da sala</label>
+            <div class="row">
+              <input id="inp-code" maxlength="5" placeholder="K7MQ2" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text">
+              <button class="btn" id="btn-join">Entrar</button>
+            </div>
+
+            <p class="hint">Funciona entre aparelhos diferentes: um joga no computador e o outro no celular. Os dois só precisam abrir o mesmo endereço deste site.</p>
+          </div>
+
+          <div id="lobby-wait" hidden>
+            <p id="wait-label" class="wait-label">Criando sala…</p>
+            <div class="room-code" id="room-code">·····</div>
+            <p class="hint" id="wait-hint">Aguarde um instante.</p>
+            <div class="row" id="wait-actions" hidden>
+              <button class="btn" id="btn-copy-code">Copiar código</button>
+              <button class="btn" id="btn-copy-link">Copiar link</button>
+            </div>
+            <button class="btn ghost" id="btn-cancel">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== JOGO ===== -->
+    <section id="screen-game" class="screen">
+      <div class="game-layout">
+        <div class="pbar" id="pbar-top">
+          <span class="chip"></span>
+          <div class="pinfo"><span class="pname"></span><span class="pcap"></span></div>
+        </div>
+
+        <div id="board-wrap"><div id="board" role="grid" aria-label="Tabuleiro de dama"></div></div>
+
+        <div class="pbar" id="pbar-bot">
+          <span class="chip"></span>
+          <div class="pinfo"><span class="pname"></span><span class="pcap"></span></div>
+        </div>
+
+        <div class="side">
+          <div class="room-badge" id="room-badge" hidden>
+            <span class="dot"></span>
+            <span class="badge-room"></span>
+            <span class="badge-state"></span>
+          </div>
+          <p id="status" aria-live="polite"></p>
+          <div class="controls">
+            <button class="btn small" id="btn-menu">Menu</button>
+            <button class="btn small" id="btn-undo">Desfazer</button>
+            <button class="btn small danger" id="btn-action">Desistir</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <h3 id="modal-title"></h3>
+      <p id="modal-text"></p>
+      <div id="modal-actions"></div>
+    </div>
+  </div>
+
+  <div id="toast" role="status"></div>
+
+  <!-- PeerJS: conexão direta entre os dois jogadores (WebRTC), sem servidor próprio -->
+  <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
